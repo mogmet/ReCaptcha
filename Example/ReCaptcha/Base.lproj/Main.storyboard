@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -51,30 +51,47 @@
                                     <action selector="didPressSegmentedControl:" destination="vXZ-lx-hvc" eventType="valueChanged" id="e5Z-W5-Q1d"/>
                                 </connections>
                             </segmentedControl>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9io-CZ-vrf">
+                                <rect key="frame" x="20" y="40" width="335" height="526"/>
+                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5OC-vc-r4F">
+                                <rect key="frame" x="0.0" y="20" width="39" height="30"/>
+                                <state key="normal" title="Close"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="o6f-cL-1PF" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="0dV-t0-W0Y"/>
+                            <constraint firstItem="9io-CZ-vrf" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="20" id="53p-yo-gUy"/>
                             <constraint firstItem="X8E-G9-9IV" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="92w-cw-lR2"/>
+                            <constraint firstItem="5OC-vc-r4F" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="CvX-hu-yt2"/>
+                            <constraint firstAttribute="trailing" secondItem="9io-CZ-vrf" secondAttribute="trailing" constant="20" id="DU2-ke-uux"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="RDW-bD-rSo" secondAttribute="bottom" constant="112" id="E4K-Vp-ZL2"/>
                             <constraint firstItem="o6f-cL-1PF" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" priority="750" id="NMD-ir-PXe"/>
+                            <constraint firstItem="X8E-G9-9IV" firstAttribute="top" secondItem="9io-CZ-vrf" secondAttribute="bottom" constant="28" id="QnE-lv-vSd"/>
                             <constraint firstItem="RDW-bD-rSo" firstAttribute="top" secondItem="o6f-cL-1PF" secondAttribute="bottom" constant="30" id="TZe-z9-MZS"/>
                             <constraint firstItem="jHc-GP-v1Z" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="VOe-WJ-FKo"/>
                             <constraint firstItem="jHc-GP-v1Z" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="XkT-zr-eUO"/>
                             <constraint firstAttribute="trailing" secondItem="o6f-cL-1PF" secondAttribute="trailing" constant="20" id="c74-nm-rgi"/>
                             <constraint firstAttribute="trailing" secondItem="RDW-bD-rSo" secondAttribute="trailing" constant="50" id="c7q-Rw-n0F"/>
                             <constraint firstItem="RDW-bD-rSo" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="50" id="iXO-hP-XZ7"/>
+                            <constraint firstItem="9io-CZ-vrf" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="niS-Xm-c88"/>
+                            <constraint firstItem="5OC-vc-r4F" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="x3z-wt-KhU"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="X8E-G9-9IV" secondAttribute="bottom" constant="45" id="y2a-Mw-eWb"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="closeButton" destination="5OC-vc-r4F" id="dGZ-D3-5dn"/>
                         <outlet property="label" destination="o6f-cL-1PF" id="KQV-3X-RKr"/>
+                        <outlet property="popView" destination="9io-CZ-vrf" id="pXc-xs-2Ir"/>
                         <outlet property="segmentedControl" destination="X8E-G9-9IV" id="sS0-3k-Alu"/>
                         <outlet property="spinner" destination="jHc-GP-v1Z" id="gRn-JW-FIK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>

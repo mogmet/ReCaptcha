@@ -20,17 +20,21 @@ class ViewController: UIViewController {
 
     private var recaptcha: ReCaptcha!
     private var disposeBag = DisposeBag()
+    private let isLoading = Variable<Bool>(true)
 
+
+    @IBOutlet weak var popView: UIView!
     @IBOutlet private weak var label: UILabel!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
     @IBOutlet private weak var segmentedControl: UISegmentedControl!
-
+    @IBOutlet weak var closeButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.popView.isHidden = true
         setupReCaptcha(endpoint: .default)
     }
-
+    
     @IBAction func didPressSegmentedControl(_ sender: UISegmentedControl) {
         label.text = ""
         switch sender.selectedSegmentIndex {
@@ -43,23 +47,36 @@ class ViewController: UIViewController {
     @IBAction private func didPressButton(button: UIButton) {
         disposeBag = DisposeBag()
 
-        let validate = recaptcha.rx.validate(on: view)
+        let validate = recaptcha.rx.validate(on: popView)
             .debug("validate")
             .share()
-
-        let isLoading = validate
+        
+        validate
             .map { _ in false }
             .startWith(true)
-            .share(replay: 1)
+            .bind(to: isLoading)
+            .disposed(by: disposeBag)
 
-        isLoading
+        closeButton.rx.tap.map { _ in false }
+            .bind(to: isLoading)
+            .disposed(by: disposeBag)
+        closeButton.rx.tap.asDriver().drive(onNext: { [weak self] in
+            self?.view.viewWithTag(Constants.webViewTag)?.removeFromSuperview()
+            self?.setupReCaptcha(endpoint: .default)
+        }).disposed(by: disposeBag)
+
+        isLoading.asObservable()
             .bind(to: spinner.rx.isAnimating)
             .disposed(by: disposeBag)
 
-        let isEnabled = isLoading
+        let isEnabled = isLoading.asObservable()
             .map { !$0 }
             .catchErrorJustReturn(false)
             .share(replay: 1)
+        
+        isEnabled
+            .bind(to: popView.rx.isHidden)
+            .disposed(by: disposeBag)
 
         isEnabled
             .bind(to: button.rx.isEnabled)
@@ -79,7 +96,9 @@ class ViewController: UIViewController {
             .disposed(by: disposeBag)
 
         validate
-            .map { try $0.dematerialize() }
+            .map {
+                try $0.dematerialize()
+            }
             .bind(to: label.rx.text)
             .disposed(by: disposeBag)
     }
@@ -89,14 +108,8 @@ class ViewController: UIViewController {
         recaptcha = try! ReCaptcha(endpoint: endpoint)
 
         recaptcha.configureWebView { [weak self] webview in
-            webview.frame = self?.view.bounds ?? CGRect.zero
+            webview.frame = self?.popView.bounds ?? CGRect.zero
             webview.tag = Constants.webViewTag
-
-            // For testing purposes
-            // If the webview requires presentation, this should work as a way of detecting the webview in UI tests
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-            label.accessibilityLabel = "webview"
-            self?.view.addSubview(label)
         }
     }
 }
